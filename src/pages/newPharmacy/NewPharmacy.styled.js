@@ -8,10 +8,15 @@ export const MainLoginStyled = styled.main`
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  
+  h2{
+      font-size: 2rem;
+    }
+  
 `
 export const FormLoginStyled = styled.form`
   margin-top: 2rem;
-  padding: 4rem;
+  padding: 2rem 4rem;
   border: 1px solid #fafcfb;
   border-radius: 8px;
   display: flex;
@@ -22,7 +27,6 @@ export const FormLoginStyled = styled.form`
 
   p {
     font-size: 2rem;   
-
   }
   span {
     color: #ff0000;
@@ -92,7 +96,6 @@ export const InputClearStyled = styled.input`
 export const ContainerBtnStyled = styled.div`
   display: flex;
   gap: 1rem;
-  padding-top:2rem;
  
   @media( min-width:769px) and (max-width: 1024px){
     grid-area: 8 / 2; 
