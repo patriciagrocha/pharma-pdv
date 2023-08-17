@@ -1,8 +1,10 @@
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./SchemaValidation";
+import { api } from "../../services/api"
 import {
   ContainerBtnStyled,
   DivInputStyled,
@@ -17,16 +19,48 @@ function NewPharmacy() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    setFocus,
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data) => {
     console.log(data);
   };
+
+  const [ address, setAddress ] = useState(null)
+
+  const handleCep = async (e) => {
+    const cep = e.target.value.replace(/\D/g,"");
+    console.log(cep);
+    try{
+      const response = await api.get(`/${cep}`);
+      console.log(response.data);
+      setAddress (response.data)      
+    }catch (error){
+      console.log('Erro ao buscar o endereço. Verifique o CEP e tente novamente.');
+      setAddress({});
+   }   
+}
+   useEffect(() => {
+    if(address){
+    setValue("address", address.street)
+    setValue("district", address.neighborhood)
+    setValue("uf", address.state)
+    setValue("lat",address.location.coordinates.latitude)
+    setValue("long",address.location.coordinates.longitude)
+    setFocus("addressNumber")
+    }
+    
+   },[address])
+
+ 
+
   return (
     <>
       <Header />
       <MainLoginStyled>
         <h2>Cadastro de farmácia</h2>
+
         <FormLoginStyled onSubmit={handleSubmit(onSubmit)}>
           <DivInputStyled>
             <label>Razão social</label>
@@ -78,9 +112,11 @@ function NewPharmacy() {
           <DivInputStyled>
             <label>CEP</label>
             <input
+              
               placeholder="_____-___"
               className="input-form"
               {...register("cep")}
+              onBlur={handleCep}
             />
             <span>{errors.cep?.message}</span>
           </DivInputStyled>
@@ -95,6 +131,7 @@ function NewPharmacy() {
               type="number"
               className="input-form"
               {...register("addressNumber")}
+
             />
             <span>{errors.addressNumber?.message}</span>
           </DivInputStyled>
@@ -115,12 +152,12 @@ function NewPharmacy() {
           </DivInputStyled>
           <DivInputStyled>
             <label>Latitude</label>
-            <input type="number" className="input-form" {...register("lat")} />
+            <input  className="input-form" {...register("lat")} />
             <span>{errors.lat?.message}</span>
           </DivInputStyled>
           <DivInputStyled>
             <label>Longitude</label>
-            <input type="number" className="input-form" {...register("long")} />
+            <input  className="input-form" {...register("long")} />
             <span>{errors.long?.message}</span>
           </DivInputStyled>
           <ContainerBtnStyled>
