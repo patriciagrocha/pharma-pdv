@@ -8,7 +8,7 @@ export const schema = yup.object().shape({
   email: yup.string().required("Campo obrigatório!").email("Insira um e-mail válido"),
   phoneNumber: yup.string().max(10, "Máximo 10 caracteres"),
   cellPhone: yup.string().required("Campo obrigatório!").max(11, "Máximo 11 caracteres"),
-  cep: yup.string().matches(/^\d{5}-\d{3}$/, 'CEP inválido').required("Campo obrigatório!"),
+  cep: yup.string().matches(/^\d{5}\d{3}$/, 'CEP inválido').required("Campo obrigatório!"),
   address: yup.string().required("Campo obrigatório!"),
   addressNumber: yup.string().required('Número é obrigatório'),
   district:  yup.string().required("Campo obrigatório!"),

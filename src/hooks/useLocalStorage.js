@@ -1,20 +1,24 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const useLocalStorage = (key, initialValue) => {
 
-  const result = localStorage.getItem(key)
-  const initial = result ? JSON.parse(result) : initialValue
+  const storedValue = localStorage.getItem(key)
+  const initial = storedValue ? JSON.parse(storedValue) : initialValue
 
-  const [value, setValue] = useState(initial)
+  const [valueLocal, setValueLocal] = useState(initial)
+
+  useEffect( () => {
+    localStorage.setItem(key, JSON.stringify(valueLocal) )
+  }, [key, valueLocal])
 
   const updateValue = (newValue) => {
-    localStorage.setItem(key, JSON.stringify(newValue))
-    setValue(newValue)
+   
+    setValueLocal(newValue)
   }
 
   return{ //retorna um obj
-    value,
-    setValue: updateValue
+    valueLocal,
+    setValueLocal: updateValue
   }
   
 }

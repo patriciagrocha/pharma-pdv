@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./SchemaValidation";
 import { api } from "../../services/api"
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   ContainerBtnStyled,
   DivInputStyled,
@@ -22,38 +25,71 @@ function NewPharmacy() {
     setValue,
     setFocus,
   } = useForm({ resolver: yupResolver(schema) });
+  
+  const { valueLocal, setValueLocal } = useLocalStorage("pharms", [])
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const [ address, setAddress ] = useState(null)
-
+  const [ address, setAddress ] = useState()
+  
   const handleCep = async (e) => {
     const cep = e.target.value.replace(/\D/g,"");
-    console.log(cep);
+   
     try{
       const response = await api.get(`/${cep}`);
-      console.log(response.data);
+      //console.log(response.data);
       setAddress (response.data)      
     }catch (error){
-      console.log('Erro ao buscar o endereço. Verifique o CEP e tente novamente.');
-      setAddress({});
-   }   
-}
-   useEffect(() => {
+      console.log(error,'Erro ao buscar o endereço. Verifique o CEP e tente novamente.');
+      setAddress();
+    }   
+  }
+  useEffect(() => {
     if(address){
-    setValue("address", address.street)
-    setValue("district", address.neighborhood)
-    setValue("uf", address.state)
-    setValue("lat",address.location.coordinates.latitude)
-    setValue("long",address.location.coordinates.longitude)
-    setFocus("addressNumber")
+      setValue("address", address.street)
+      setValue("district", address.neighborhood)
+      setValue("uf", address.state)
+      setValue("lat",address.location.coordinates.latitude)
+      setValue("long",address.location.coordinates.longitude)
+      setFocus("addressNumber")
     }
     
-   },[address])
+  },[address])
 
  
+  
+  const onSubmit = (data) => {  
+    
+    try{
+      console.log(data);
+      console.log("Cadastro realizado com sucesso");
+      setValueLocal([...valueLocal, data])
+      toast.success('Cadastro realizado com sucesso!', {});
+      resetForm();
+
+    }catch (error){
+      console.log(error, "capturei um erro");
+      toast.error("Falha ao cadastrar os dados.Tente novamente!", {})
+    }
+      
+  };
+  const resetForm = () => {
+    setValue("corporateName", "")
+    setValue("cnpj", "")
+    setValue("fantasyName", "")
+    setValue("email", "")
+    setValue("phoneNumber", "")
+    setValue("cellPhone", "")
+    setValue("cep", "")
+    setValue("address", "")
+    setValue("addressNumber", "")
+    setValue("district", "")
+    setValue("uf", "")
+    setValue("complement", "")
+    setValue("lat","")
+    setValue("long","")
+    setFocus("corporateName")
+
+  }
+  
 
   return (
     <>
@@ -167,6 +203,19 @@ function NewPharmacy() {
         </FormLoginStyled>
       </MainLoginStyled>
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
+        
     </>
   );
 }
