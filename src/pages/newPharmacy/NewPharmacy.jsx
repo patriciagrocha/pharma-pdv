@@ -3,7 +3,7 @@ import { Header } from "../../components/header/Header";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./SchemaValidation";
+import { newPharmacySchema } from "../../validations/newPharmacySchema";
 import { api } from "../../services/api"
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { ToastContainer, toast } from 'react-toastify';
@@ -24,9 +24,9 @@ function NewPharmacy() {
     formState: { errors },
     setValue,
     setFocus,
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({ resolver: yupResolver(newPharmacySchema) });
   
-  const { valueLocal, setValueLocal } = useLocalStorage("pharms", [])
+  const { setValueLocal } = useLocalStorage("pharms", {})
 
   const [ address, setAddress ] = useState()
   
@@ -56,18 +56,20 @@ function NewPharmacy() {
 
  
   
-  const onSubmit = (data) => {  
+  const onSubmit = async (data) => {  
     
     try{
-      console.log(data);
-      console.log("Cadastro realizado com sucesso");
-      setValueLocal([...valueLocal, data])
-      toast.success('Cadastro realizado com sucesso!', {});
-      resetForm();
+      const result = await setValueLocal(data)
+      if(result){
+        toast.success('Cadastro realizado com sucesso!', {});
+        resetForm();
+      }else{
+        toast.error("Falha ao cadastrar os dados.Tente novamente!", {})
+      } 
 
     }catch (error){
-      console.log(error, "capturei um erro");
-      toast.error("Falha ao cadastrar os dados.Tente novamente!", {})
+      toast.error("Ocorreu um erro inesperado.Tente novamente!", {})
+     
     }
       
   };
