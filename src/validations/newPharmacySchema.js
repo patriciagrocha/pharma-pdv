@@ -1,7 +1,7 @@
 
 import * as yup from "yup"
 
-export const schema = yup.object().shape({
+export const newPharmacySchema = yup.object().shape({
   corporateName: yup.string().required("Campo obrigatório!"),
   cnpj: yup.string().required('Campo obrigatório').matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/, 'CNPJ inválido'),
   fantasyName:yup.string().required("Campo obrigatório!"),
