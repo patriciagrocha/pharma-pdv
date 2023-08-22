@@ -1,7 +1,7 @@
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
-
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -12,6 +12,9 @@ import {
   InputSaveStyled,
   MainLoginStyled,
 } from "./RegisterMed.styled";
+import { registerMedSchema } from "../../validations/registerMedSchema";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { stringToFloat } from "../../utils/stringToFloat";
 
 function RegisterMed() {
   const {
@@ -20,22 +23,41 @@ function RegisterMed() {
     formState: { errors },
     setValue,
     setFocus,
-  } = useForm();
+  } = useForm({ resolver: yupResolver(registerMedSchema) });
 
-  const onSubmit = (data) => {
+  const { setValueLocal } = useLocalStorage("drugs", {})
+
+  const onSubmit = async (data) => {
+
+    data.dosage = stringToFloat(data.dosage)
+    data.price = stringToFloat(data.price)
 
     try{
-      console.log(data);
-      toast.success("Medicamento cadastrado com sucesso!", {});
-
+      const result =  await setValueLocal(data)
+      if(result){
+        toast.success('Medicamento cadastrado com sucesso!', {});
+        resetForm();
+      }else{
+        toast.error("Falha ao cadastrar os dados.Tente novamente!", {})
+      } 
     }catch(error){
-      console.log(error, "Capturei um erro");
-      toast.error("Falha ao cadastrar os dados.Tente novamente!", {})
+      toast.error("Ocorreu um erro inesperado.Tente novamente!", {})
 
     }
+
     
   }
+  const resetForm = () => {
+    setValue("drugName", "")
+    setValue("labName", "")
+    setValue("dosage", "")
+    setValue("price", "")
+    setValue("controlled", "")
+    setValue("description", "")
+    setFocus("drugName")
 
+  }
+  
   return(
     <>
     <Header />
