@@ -5,21 +5,24 @@ const AppContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 function AppProvider({ children }) {
-  const { value, setValue } = useLocalStorage('user', {})
-  const [ user, setUser ] = useState({})
+  const { valueLocal, setValueLocal, getValue} = useLocalStorage('user')
+  const [ user, setUser ] = useState(getValue())
+  
 
   useEffect(() => {
-    if(value) {
-      setUser(value)
+    if(user[0]) {
+      setUser(user[0])
     }
-  }, [setUser, value])
+  }, [user, valueLocal])
 
   const logout = () => {
-    setValue({})
+    //removeUser()
+    console.log("passou");
+    setValueLocal({})
   }
 
   return (
-      <AppContext.Provider value={{ value, setValue, user, logout }}>
+      <AppContext.Provider value={{ valueLocal, setValueLocal, user, logout }}>
           {children}
       </AppContext.Provider>
     )

@@ -16,6 +16,10 @@ const useLocalStorage = (key) => {
     }
   }
 
+  const removeValue = () => {
+    return localStorage.removeItem(key)    
+  } 
+
   const [valueLocal, setValueLocal] = useState([])
 
 
@@ -37,7 +41,9 @@ const useLocalStorage = (key) => {
 
   return{ //retorna um obj
     valueLocal,
-    setValueLocal: updateValue
+    setValueLocal: updateValue,
+    getValue: getLocalStorageValue,
+    removeUser: removeValue
   }
   
 }

@@ -1,20 +1,18 @@
 
 import "./global.css"
-// import { Login } from "./pages/login/Login"
-// import { NewPharmacy } from "./pages/newPharmacy/NewPharmacy"
-import { RegisterMed } from "./pages/registerMed/RegisterMed"
+
+import { AppProvider } from "./context/userContext"
+import { BrowserRouter } from "react-router-dom"
+import { RoutesApp } from "./Routes/RoutesApp"
+
 
 function App() {
-  
-
   return (
-    <>
-    {/* <Login /> */}
-    {/* <NewPharmacy /> */}
-    <RegisterMed />
-     
-    </>
+    <BrowserRouter>
+      <AppProvider>
+        <RoutesApp />
+      </AppProvider>
+    </BrowserRouter>
   )
 }
-
 export default App
