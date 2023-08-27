@@ -9,12 +9,12 @@ function Header() {
    
     {
       route:"/new-pharmacy",
-      description:"Nova farmácia",
+      description:"Farmácias",
       click: () => null
     },
     {
       route:"/register-medicine",
-      description:"Novo medicamento",
+      description:"Medicamentos",
       click: () => null
     },
     {
