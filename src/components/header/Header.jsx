@@ -1,21 +1,26 @@
+import { useAuthentication } from "../../context/Authentication/useAuthentication";
 import { HeaderStyled, LinkStyled, NavStyled } from "./Header.styled";
 
 
 function Header() {
+  const { logout , user} = useAuthentication()
 
   const pages = [
    
     {
       route:"/new-pharmacy",
-      description:"Nova farmácia"
+      description:"Nova farmácia",
+      click: () => null
     },
     {
       route:"/register-medicine",
-      description:"Novo medicamento"
+      description:"Novo medicamento",
+      click: () => null
     },
     {
       route:"/",
-      description:"Sair"
+      description:"Sair",
+      click: () => logout()
     }
   ]
 
@@ -25,13 +30,15 @@ function Header() {
       
         <NavStyled>
           {
-            pages.map(({route, description}) => {
+           user ? (
+            pages.map(({route, description, click}) => {
               return(
-                <LinkStyled key={route} to={route} >
+                <LinkStyled key={route} to={route} onClick={click}>
                   {description}
                 </LinkStyled> 
               )         
             })
+           ) : null
           }
         </NavStyled>    
        

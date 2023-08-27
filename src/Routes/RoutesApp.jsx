@@ -1,13 +1,14 @@
 
+import { useAuthentication } from "../context/Authentication/useAuthentication"
 import { PrivateRoutes } from "./PrivateRoutes"
 import { PublicRoutes } from "./PublicRoutes"
 
 
 
 function RoutesApp() {
-   const user = false
+   const {user} = useAuthentication()
 
-    if (user) {
+    if (user?.email) {
       return <PrivateRoutes/>
     }
     return (
