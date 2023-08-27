@@ -4,6 +4,11 @@ import * as yup from "yup"
 import { FormLoginStyled, InputLoginStyled, MainLoginStyled } from "./Login.styled"
 import { Header } from "../../components/header/Header"
 import { Footer } from "../../components/footer/Footer"
+import { useNavigate } from "react-router-dom"
+import { useAuthentication } from "../../context/Authentication/useAuthentication"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const schema = yup.object().shape({
   email: yup.string()
@@ -21,9 +26,31 @@ function Login(){
     handleSubmit, 
     formState: { errors} } = useForm({resolver: yupResolver(schema)})
 
-  const onSubmit = (data) => {
+
+  const{ login } = useAuthentication()
+  const navigate = useNavigate()
+
+  const onSubmit = async (data) => {
+
+    try {
+      const result = await login(data)
+      if(result.code == 201){
+        navigate("/new-pharmacy")
+      }else{
+        toast.error("Falha ao efetuar login.Tente novamente!", {})
+      }
+      
+    } catch (error) {
+      toast.error("Ocorreu um erro inesperado. Consulte o suporte!", {})
+    }
+
+
+
     console.log(data);
+    navigate("/new-pharmacy")    
   }
+ 
+
 
   return (
     <>
@@ -53,6 +80,18 @@ function Login(){
         </FormLoginStyled>
       </MainLoginStyled>
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
     </>
   );
 }

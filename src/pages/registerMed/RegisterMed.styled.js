@@ -43,10 +43,15 @@ export const FormLoginStyled = styled.form`
   .input-form{
     width: 18rem;
     padding: 12px;
+    margin-top: 4px;
     outline-color: #a4cb2e;
     border-radius: 4px;
     border: none;
     background-color: aliceblue;
+  }
+  .input-select {
+    display: flex;
+    flex-direction: column;
   }
 
   @media( min-width:769px) and (max-width: 1024px){
@@ -58,7 +63,7 @@ export const FormLoginStyled = styled.form`
   }
   @media( min-width: 1025px ) {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(2, 1fr); 
     grid-gap: 10px;
     box-shadow: none;
     border: none;
@@ -99,7 +104,7 @@ export const ContainerBtnStyled = styled.div`
  
   @media( min-width:769px) and (max-width: 1024px){
     grid-area: 8 / 2; 
-    padding-top: 4rem;
+    padding-top: 2rem;
   }
   @media( min-width: 1025px ){
     grid-area: 9/3;

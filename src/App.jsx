@@ -1,20 +1,18 @@
 
 import "./global.css"
-// import { Login } from "./pages/login/Login"
-// import { NewPharmacy } from "./pages/newPharmacy/NewPharmacy"
-import { RegisterMed } from "./pages/registerMed/RegisterMed"
+
+import { BrowserRouter } from "react-router-dom"
+import { RoutesApp } from "./Routes/RoutesApp"
+import { AuthenticationProvider } from "./context/Authentication/AutenticationProvider"
+
 
 function App() {
-  
-
   return (
-    <>
-    {/* <Login /> */}
-    {/* <NewPharmacy /> */}
-    <RegisterMed />
-     
-    </>
+    <BrowserRouter>
+      <AuthenticationProvider>
+        <RoutesApp />
+      </AuthenticationProvider>    
+    </BrowserRouter>
   )
 }
-
 export default App
