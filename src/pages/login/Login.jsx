@@ -4,7 +4,6 @@ import * as yup from "yup"
 import { FormLoginStyled, InputLoginStyled, MainLoginStyled } from "./Login.styled"
 import { Header } from "../../components/header/Header"
 import { Footer } from "../../components/footer/Footer"
-import { useApp } from "../../hooks/useApp"
 import { useNavigate } from "react-router-dom"
 
 
@@ -24,13 +23,11 @@ function Login(){
     handleSubmit, 
     formState: { errors} } = useForm({resolver: yupResolver(schema)})
 
-  const { setValueLocal} = useApp()  
 
   const navigate = useNavigate()
 
   const onSubmit = (data) => {
     console.log(data);
-    setValueLocal(data)
     navigate("/new-pharmacy")    
   }
  

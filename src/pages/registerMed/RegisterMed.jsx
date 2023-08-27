@@ -13,7 +13,6 @@ import {
   MainLoginStyled,
 } from "./RegisterMed.styled";
 import { registerMedSchema } from "../../validations/registerMedSchema";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { stringToFloat } from "../../utils/stringToFloat";
 
 function RegisterMed() {
@@ -25,7 +24,7 @@ function RegisterMed() {
     setFocus,
   } = useForm({ resolver: yupResolver(registerMedSchema) });
 
-  const { setValueLocal } = useLocalStorage("drugs", {})
+
 
   const onSubmit = async (data) => {
 
@@ -33,7 +32,7 @@ function RegisterMed() {
     data.price = stringToFloat(data.price)
 
     try{
-      const result =  await setValueLocal(data)
+      const result =  true
       if(result){
         toast.success('Medicamento cadastrado com sucesso!', {});
         resetForm();
@@ -94,9 +93,9 @@ function RegisterMed() {
           <span>{errors.price?.message}</span>
         </DivInputStyled>
         <DivInputStyled>
-          <label>
-            Tipo
-          <select  className="input-form" {...register("controlled")}>
+          <label className="input-select">
+            Categoria
+          <select  className="input-form " {...register("controlled")}>
             <option value="">Escolha... </option>
             <option value="controlled">Medicamento controlado </option>
             <option value="notControlled">Medicamento comum </option>

@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { newPharmacySchema } from "../../validations/newPharmacySchema";
 import { api } from "../../services/api"
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -26,7 +25,6 @@ function NewPharmacy() {
     setFocus,
   } = useForm({ resolver: yupResolver(newPharmacySchema) });
   
-  const { setValueLocal } = useLocalStorage("pharms", {})
 
   const [ address, setAddress ] = useState()
   
@@ -54,12 +52,12 @@ function NewPharmacy() {
     
   },[address])
 
- 
   
-  const onSubmit = async (data) => {  
+  const onSubmit =  (data) => {  
+    console.log(data);
     
     try{
-      const result = await setValueLocal(data)
+      const result = true
       if(result){
         toast.success('Cadastro realizado com sucesso!', {});
         resetForm();
