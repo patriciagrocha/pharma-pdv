@@ -1,6 +1,6 @@
 
-import { useAuthentication } from "../context/Authentication/useAuthentication"
-import { PharmacyProvider } from "../context/Pharmacy/PharmacyProvider"
+import { useAuthentication } from "../contexts/Authentication/useAuthentication"
+import { PharmacyProvider } from "../contexts/Pharmacy/PharmacyProvider"
 import { PrivateRoutes } from "./PrivateRoutes"
 import { PublicRoutes } from "./PublicRoutes"
 

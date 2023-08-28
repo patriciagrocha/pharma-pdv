@@ -15,7 +15,7 @@ import {
   InputSaveStyled,
   MainLoginStyled,
 } from "./NewPharmacy.styled";
-import { usePharmacy } from "../../context/Pharmacy/usePharmacy"
+import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy"
 
 
 function NewPharmacy() {

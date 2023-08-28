@@ -9,7 +9,7 @@ export const PharmacyProvider = ({children}) => {
     const result = getData("pharms")
     return result ? result : []
   }
-  const [ allPharms, setAllPharms ] = useState(null)
+  const [ allPharms, setAllPharms ] = useState(getPharms())
   const [ isLoading, setIsLoading]  = useState(true)
 
   const addPharm = (newPharm) => {
