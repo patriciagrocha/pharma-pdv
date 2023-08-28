@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getData, setData } from "../../utils/localStorage"
 import { PharmacyContext } from "./PharmacyContext"
-import { PropTypes } from "prop-types"
+import PropTypes from "prop-types"
 
 export const PharmacyProvider = ({children}) => {
 
@@ -25,6 +25,7 @@ export const PharmacyProvider = ({children}) => {
           const updatedValues = [...pharms, newPharm]
           setData("pharms",updatedValues)
           setIsLoading(!isLoading)
+          setAllPharms(getPharms());
           resolve({ code: 201, message: "Farmácia cadastrada com sucesso"})
         }
       } catch (error) {
@@ -39,14 +40,12 @@ export const PharmacyProvider = ({children}) => {
     )
     return foundPharm ? true : false
   }
-
+  
   useEffect(() => {
-    setAllPharms(getPharms())
+    const pharms = getPharms()
+    setAllPharms(pharms)
 
   },[isLoading])
-
-
-
 
   return(
     <PharmacyContext.Provider
@@ -61,5 +60,5 @@ export const PharmacyProvider = ({children}) => {
 }
 
 PharmacyProvider.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 }

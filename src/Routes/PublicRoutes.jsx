@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Login } from "../pages/login/Login"
 
-function PublicRoutes () {
+export const PublicRoutes = () => {
   return (
     <Routes>
       <Route path="*" element={<Login />}/>
@@ -9,4 +9,3 @@ function PublicRoutes () {
   )
 }
 
-export { PublicRoutes }

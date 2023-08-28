@@ -5,8 +5,7 @@ import { PrivateRoutes } from "./PrivateRoutes"
 import { PublicRoutes } from "./PublicRoutes"
 
 
-
-function RoutesApp() {
+export const RoutesApp = () => {
    const {user} = useAuthentication()
 
     if (user?.email) {
@@ -21,4 +20,3 @@ function RoutesApp() {
     )
 }
 
-export { RoutesApp }

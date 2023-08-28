@@ -1,33 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy";
-import { MapContainerStyled, MarkerStyled, PopupStyled } from "./Map.styled";
-import { stringToFloat } from "../../utils/stringToFloat";
-import { TileLayer } from "leaflet";
-import { MdLocationOn, MdEmail } from "react-icons/md"
-import { AiFillPhone} from "react-icons/ai"
-import { RiWhatsappFill} from "react-icons/ri"
+import { TileLayer } from "react-leaflet";
+import { MapContainerStyled, MarkerStyled, PopupStyled, TableStyled, TdStyled, TrStyled } from "./Map.styled";
+import "leaflet/dist/leaflet.css";
+import { AiFillPhone } from "react-icons/ai";
+import { RiWhatsappFill } from "react-icons/ri";
+import { MdEmail, MdLocationOn } from "react-icons/md";
 
 export const Map = () => {
-
   const { allPharms } = usePharmacy()
+  const [currentCenter, setCurrentCenter] = useState([-26.301478, -48.8479779])
+  const [currentZoom, setCurrentZoom] = useState(5)
+  const [forceUpdate, setForceUpdate] = useState(0);
 
   useEffect(() => {}, [allPharms])
+  useEffect(() => {console.log("effect")}, [currentCenter, currentZoom])
 
-  return(
+  const handleChangeCoordinates = (coordinates) => {
+    console.log(coordinates);
+    setCurrentCenter(coordinates)
+    setCurrentZoom(18)
+    setForceUpdate(forceUpdate + 1);
+    scrollToTop()
+    return
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <>    
     <MapContainerStyled
-      zoom={5}
+      key={forceUpdate}
+      center={currentCenter}
+      zoom={currentZoom}  
       scrollWheelZoom={true}
-      center={allPharms ? [
-        stringToFloat(allPharms[0].lat),
-        stringToFloat(allPharms[0].long)
-      ] : [-26.301478,-48.8479779 ]}>
-
-        <TileLayer
+    >
+      <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a rel="external"> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {
-        allPharms ? allPharms.map(
+      />
+      {allPharms.length > 0
+        ? allPharms.map(
             ({
               corporateName,
               cnpj,
@@ -36,6 +51,7 @@ export const Map = () => {
               phoneNumber,
               cellPhone,
               address,
+              city,
               addressNumber,
               district,
               uf,
@@ -45,7 +61,7 @@ export const Map = () => {
               long,
             }) => {
               return (
-                <MarkerStyled key={corporateName} position={[lat, long]}>
+                <MarkerStyled key={email} position={[lat, long]}>
                   <PopupStyled>
                     <ul>
                       <li>
@@ -71,6 +87,8 @@ export const Map = () => {
                           " - " +
                           district +
                           ", " +
+                          city +
+                          " - " +
                           uf}
                       </li>
                       {complement ? (
@@ -103,13 +121,70 @@ export const Map = () => {
                 </MarkerStyled>
               );
             }
-          )
+          )          
         : null}
-              
-
-
-
     </MapContainerStyled>
-
-  )
-}
+    {
+      allPharms.length > 0 ? 
+      (
+        <TableStyled>
+          <thead>
+            <tr>
+              {null}
+            </tr>
+        </thead>
+        <tbody>
+          {
+            allPharms.map(
+              (
+                {                  
+                  cnpj,
+                  fantasyName,                  
+                  cellPhone,
+                  address,
+                  city,
+                  addressNumber,
+                  district,
+                  uf,                 
+                  lat,
+                  long,
+                }
+              ) => {
+                return (
+                  <TrStyled key={cnpj}>
+                    <TdStyled className="location">                    
+                      <MdLocationOn size={35}/>
+                      <div>
+                        <h3>{district.toUpperCase()}</h3>
+                        <p>{city + " - " + uf}</p>
+                      </div>                    
+                    </TdStyled>                  
+                    <TdStyled>
+                      <h4>{fantasyName}</h4>
+                      <p>{`${address}, ${addressNumber}`}</p>
+                      <div>
+                        <RiWhatsappFill color="green" />
+                          <a
+                            href={`https://wa.me/55${cellPhone}`}
+                            target="_blank" rel="noreferrer"
+                          >
+                            {cellPhone}
+                          </a>
+                      </div>
+                    </TdStyled>
+                    <TdStyled>
+                      <button onClick={() => handleChangeCoordinates([lat, long])}>
+                        VER NO MAPA
+                      </button>
+                    </TdStyled>
+                  </TrStyled>
+                )
+              })              
+          }
+        </tbody>
+      </TableStyled>
+      ): null
+    }    
+    </>
+  );
+};

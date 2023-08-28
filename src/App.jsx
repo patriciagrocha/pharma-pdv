@@ -3,7 +3,7 @@ import "./global.css"
 
 import { BrowserRouter } from "react-router-dom"
 import { RoutesApp } from "./Routes/RoutesApp"
-import { AuthenticationProvider } from "./context/Authentication/AutenticationProvider"
+import { AuthenticationProvider } from "./contexts/Authentication/AutenticationProvider"
 
 
 function App() {
