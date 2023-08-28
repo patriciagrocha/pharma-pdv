@@ -1,5 +1,6 @@
 
 import { useAuthentication } from "../contexts/Authentication/useAuthentication"
+import { MedicineProvider } from "../contexts/Medicine/MedicineProvider"
 import { PharmacyProvider } from "../contexts/Pharmacy/PharmacyProvider"
 import { PrivateRoutes } from "./PrivateRoutes"
 import { PublicRoutes } from "./PublicRoutes"
@@ -11,7 +12,9 @@ export const RoutesApp = () => {
     if (user?.email) {
       return(
         <PharmacyProvider>
+          <MedicineProvider>
            <PrivateRoutes/>
+          </MedicineProvider>
         </PharmacyProvider>
       )
     }
