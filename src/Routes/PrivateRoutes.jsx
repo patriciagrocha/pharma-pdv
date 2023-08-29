@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { NewPharmacy } from "../pages/newPharmacy/NewPharmacy"
 import { RegisterMed } from "../pages/registerMed/RegisterMed"
+import { MapPharms } from "../pages/mapPharms/MapPharms";
 
 
 function PrivateRoutes () {
@@ -8,7 +9,8 @@ function PrivateRoutes () {
     <Routes>
       <Route path="/new-pharmacy" element={<NewPharmacy />}/>
       <Route path="/register-medicine" element={<RegisterMed />}/>
-      <Route path="*" element={<p>Path not resolved</p>} />
+      <Route path="/map-pharms" element={<MapPharms />}/>
+      <Route path="*" element={<MapPharms />} />
     </Routes>
   )
 }

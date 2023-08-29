@@ -15,7 +15,7 @@ import {
   InputSaveStyled,
   MainLoginStyled,
 } from "./NewPharmacy.styled";
-import { usePharmacy } from "../../context/Pharmacy/usePharmacy"
+import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy"
 
 
 function NewPharmacy() {
@@ -48,6 +48,7 @@ function NewPharmacy() {
     if(address){
       setValue("address", address.street)
       setValue("district", address.neighborhood)
+      setValue("city", address.city)
       setValue("uf", address.state)
       setValue("lat",address.location.coordinates.latitude)
       setValue("long",address.location.coordinates.longitude)
@@ -57,8 +58,7 @@ function NewPharmacy() {
   },[address])
 
   
-  const onSubmit = async (data) => {  
-    
+  const onSubmit = async (data) => {     
     try{
       const result = await addPharm(data)
       if(result.code == 201){
@@ -67,7 +67,6 @@ function NewPharmacy() {
       }else if(result.code == 409){
         toast.error(result.message, {})
       } 
-
     }catch (error){
       toast.error("Ocorreu um erro inesperado. Consulte o suporte!", {})
      
@@ -173,6 +172,11 @@ function NewPharmacy() {
 
             />
             <span>{errors.addressNumber?.message}</span>
+          </DivInputStyled>
+          <DivInputStyled>
+            <label>Cidade</label>
+            <input className="input-form" {...register("city")} />
+            <span>{errors.city?.message}</span>
           </DivInputStyled>
           <DivInputStyled>
             <label>Bairro</label>

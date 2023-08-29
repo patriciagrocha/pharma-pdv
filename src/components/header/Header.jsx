@@ -1,4 +1,4 @@
-import { useAuthentication } from "../../context/Authentication/useAuthentication";
+import { useAuthentication } from "../../contexts/Authentication/useAuthentication";
 import { HeaderStyled, LinkStyled, NavStyled } from "./Header.styled";
 
 
@@ -8,7 +8,7 @@ function Header() {
   const pages = [
    
     {
-      route:"/new-pharmacy",
+      route:"/map-pharms",
       description:"Farmácias",
       click: () => null
     },

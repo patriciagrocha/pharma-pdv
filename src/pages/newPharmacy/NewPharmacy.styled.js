@@ -81,6 +81,11 @@ export const InputSaveStyled = styled.input`
     color: #fff;
     font-weight: 500;
     font-size: 1rem;
+    cursor: pointer;
+
+    &:hover{
+      opacity: 0.8;
+    }
   
 `
 export const InputClearStyled = styled.input`
@@ -92,6 +97,11 @@ export const InputClearStyled = styled.input`
     color: #fff;
     font-weight: 500;
     font-size: 1rem;
+    cursor: pointer;
+
+    &:hover{
+      opacity: 0.8;
+    }
 `
 export const ContainerBtnStyled = styled.div`
   display: flex;

@@ -12,6 +12,7 @@ export const newPharmacySchema = yup.object().shape({
   address: yup.string().required("Campo obrigatório!"),
   addressNumber: yup.string().required('Número é obrigatório'),
   district:  yup.string().required("Campo obrigatório!"),
+  city:  yup.string().required("Campo obrigatório!"),
   uf:  yup.string().required("Campo obrigatório!"),
   complement: yup.string(),
   lat: yup.string().min(-90).max(90).required("Campo obrigatório!"),
