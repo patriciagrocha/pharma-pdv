@@ -14,8 +14,9 @@ import {
 } from "./RegisterMed.styled";
 import { registerMedSchema } from "../../validations/registerMedSchema";
 import { stringToFloat } from "../../utils/stringToFloat";
+import { useMedicine } from "../../contexts/Medicine/useMedicine";
 
-function RegisterMed() {
+export const RegisterMed = () => {
   const {
     register,
     handleSubmit,
@@ -24,7 +25,7 @@ function RegisterMed() {
     setFocus,
   } = useForm({ resolver: yupResolver(registerMedSchema) });
 
-
+  const { addDrug } = useMedicine()
 
   const onSubmit = async (data) => {
 
@@ -32,19 +33,16 @@ function RegisterMed() {
     data.price = stringToFloat(data.price)
 
     try{
-      const result =  true
-      if(result){
-        toast.success('Medicamento cadastrado com sucesso!', {});
+      const result =  await addDrug(data)
+      if(result.code == 201 ){
+        toast.success(result.message, {});
         resetForm();
-      }else{
-        toast.error("Falha ao cadastrar os dados.Tente novamente!", {})
+      }else if(result.code == 409){
+        toast.error(result.message, {})
       } 
     }catch(error){
-      toast.error("Ocorreu um erro inesperado.Tente novamente!", {})
-
-    }
-
-    
+      toast.error("Ocorreu um erro inesperado. Consulte o suporte.", {})
+    }    
   }
   const resetForm = () => {
     setValue("drugName", "")
@@ -135,5 +133,3 @@ function RegisterMed() {
     </>
   )
 }
-
-export { RegisterMed }

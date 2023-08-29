@@ -13,7 +13,7 @@ function Header() {
       click: () => null
     },
     {
-      route:"/register-medicine",
+      route:"/medicines",
       description:"Medicamentos",
       click: () => null
     },
