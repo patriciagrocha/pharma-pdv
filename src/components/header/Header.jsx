@@ -1,5 +1,6 @@
 import { useAuthentication } from "../../contexts/Authentication/useAuthentication";
-import { HeaderStyled, LinkStyled, NavStyled } from "./Header.styled";
+import { HeaderStyled, LinkStyled } from "./Header.styled";
+import logoImg from "../../assets/imgs/logoImg.png"
 
 
 function Header() {
@@ -25,22 +26,24 @@ function Header() {
   ]
 
   return(
-    <HeaderStyled>  
-      <img src="src/assets/imgs/logo-white2.png" alt="logo pharma pdv" />   
+    <HeaderStyled>     
+        <img src={logoImg} alt="logo pharma pdv" />   
       
-        <NavStyled>
           {
            user ? (
-            pages.map(({route, description, click}) => {
-              return(
-                <LinkStyled key={route} to={route} onClick={click}>
-                  {description}
-                </LinkStyled> 
+             pages.map(({route, description, click}) => {
+               return(
+                <>
+                  
+                    <LinkStyled key={route} to={route} onClick={click}>
+                      {description}
+                    </LinkStyled> 
+                  
+                </>  
               )         
             })
            ) : null
           }
-        </NavStyled>    
        
 
     </HeaderStyled>
