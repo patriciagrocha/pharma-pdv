@@ -5,6 +5,7 @@ import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy"
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Map } from "../../components/map/Map";
+import { Button } from "../../components/button/Button";
 
 export const MapPharms = () => {
   const { allPharms } = usePharmacy();
@@ -22,7 +23,7 @@ export const MapPharms = () => {
     <>
       <Header />
       <DivStyled>
-        <button onClick={handleClick}>NOVA FARMÁCIA</button>
+        <Button clickEvent={handleClick}>NOVA FARMÁCIA</Button>
       </DivStyled>
       <MainFarmStyled>       
         <Map />

@@ -7,6 +7,7 @@ import { MainMedicineStyled } from "./Medicines.styled"
 import { Card } from "../../components/card/Card"
 import { Modal } from "../../components/modal/Modal"
 import { floatToCurrency } from "../../utils/floatToCurrency"
+import { Button } from "../../components/button/Button"
 
 export const Medicines = () => {
 
@@ -31,8 +32,8 @@ export const Medicines = () => {
   return(
     <>
       <Header />
-      <button onClick={handleClick}>Cadastrar</button>
-      <h2>Medicamentos</h2>
+      <Button clickEvent={handleClick}>CADASTRAR</Button>
+        <h2>Medicamentos</h2>
       <MainMedicineStyled>
       {allDrugs.length > 0 ? allDrugs.map(
               ({
