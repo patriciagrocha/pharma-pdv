@@ -55,13 +55,15 @@ export const Medicines = () => {
                   <Card
                     clickEvent={() => handleOpenModal(drug)}
                     key={drugName}
-                  >                    
-                    <li><img src="src/assets/imgs/medicine.jpeg" alt="caixa de medicamento" /></li>
+                  >  <ul>
+                       <li><img src="src/assets/imgs/medicine.jpeg" alt="caixa de medicamento" /></li>
                     <li>{drugName +" " + dosage}</li>
-                    <li>{labName}</li>
+                    <li>{labName.toUpperCase()}</li>
                     <li className="price">
                       <strong>{floatToCurrency(price)}</strong>
-                    </li>                    
+                    </li>                 
+                    </ul>                  
+                      
                   </Card>
                 );
               }
