@@ -4,9 +4,9 @@ export const MainMedicineStyled = styled.main`
   width: 100%;
   min-height: 100vh;
   display: flex;
-  flex-direction:column;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  padding: 2rem;
+  padding: 4rem;
+  gap: .5rem;
 
 `

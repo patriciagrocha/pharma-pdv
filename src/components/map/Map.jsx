@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import { AiFillPhone } from "react-icons/ai";
 import { RiWhatsappFill } from "react-icons/ri";
 import { MdEmail, MdLocationOn } from "react-icons/md";
+import { Button } from "../button/Button";
 
 export const Map = () => {
   const { allPharms } = usePharmacy()
@@ -173,9 +174,7 @@ export const Map = () => {
                       </div>
                     </TdStyled>
                     <TdStyled>
-                      <button onClick={() => handleChangeCoordinates([lat, long])}>
-                        VER NO MAPA
-                      </button>
+                      <Button clickEvent={() => handleChangeCoordinates([lat, long])}>VER NO MAPA</Button>
                     </TdStyled>
                   </TrStyled>
                 )
