@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import { MedicineContext } from "./MedicineContext"
 import { getData, setData } from "../../utils/localStorage"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const MedicineProvider = ({children}) => {
   const getDrugs = () => {
@@ -49,7 +49,11 @@ export const MedicineProvider = ({children}) => {
     );
     return foundDrug ? true : false
   };
+  useEffect(() => {
+    const drugs = getDrugs()
+    setAllDrugs(drugs)
 
+  },[allDrugs.length])
 
   return(
     <MedicineContext.Provider
