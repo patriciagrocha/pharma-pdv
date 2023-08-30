@@ -8,6 +8,7 @@ import { Card } from "../../components/card/Card";
 import { Modal } from "../../components/modal/Modal";
 import { floatToCurrency } from "../../utils/floatToCurrency";
 
+
 export const Medicines = () => {
   const { allDrugs } = useMedicine();
   const [openModal, setOpenModal] = useState(false);
@@ -70,18 +71,37 @@ export const Medicines = () => {
       <Footer />
       <Modal className="modal" open={openModal} onClose={handleCloseModal}>
         <ul>
-          <li>{modalContent.drugName}</li>
-          <li>{modalContent.labName}</li>
-          <li>{modalContent.dosage}</li>
-          <li>{modalContent.price}</li>
-          <li>
+          <li> <img src={drugImg} alt="caixa do medicamento" /> </li>
+          <div className="list-modal">
+            <li>
+              <strong>Medicamento: </strong>
+              {modalContent.drugName}
+            </li>
+            <li>
+              <strong>Laboratório: </strong>
+              {modalContent.labName}
+            </li>
+            <li>
+              <strong>Dosagem: </strong>
+              {modalContent.dosage}
+            </li>
+            <li>
+              <strong>Preço: </strong>
+              {modalContent.price}
+            </li>
+            <li>
+              <strong>Tipo: </strong>
             {modalContent.controlled
               ? "Medicamento Controlado"
               : "Medicamento Comum"}
           </li>
           {modalContent.description ? (
-            <li>{`Description ${modalContent.description}`}</li>
+            <li>
+              <strong>Descrição: </strong>              
+              {modalContent.description}
+            </li>
           ) : null}
+          </div>
         </ul>
       </Modal>
     </>
