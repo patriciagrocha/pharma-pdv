@@ -1,41 +1,34 @@
-import { useNavigate } from "react-router-dom"
-import { useMedicine } from "../../contexts/Medicine/useMedicine"
-import { useEffect, useState } from "react"
-import { Header } from "../../components/header/Header"
-import { Footer } from "../../components/footer/Footer"
-import { MainMedicineStyled } from "./Medicines.styled"
-import { Card } from "../../components/card/Card"
-import { Modal } from "../../components/modal/Modal"
-import { floatToCurrency } from "../../utils/floatToCurrency"
-import { Button } from "../../components/button/Button"
+import drugImg from "../../assets/imgs/medicine.jpeg"
+import { useMedicine } from "../../contexts/Medicine/useMedicine";
+import { useEffect, useState } from "react";
+import { Header } from "../../components/header/Header";
+import { Footer } from "../../components/footer/Footer";
+import { MainMedicineStyled } from "./Medicines.styled";
+import { Card } from "../../components/card/Card";
+import { Modal } from "../../components/modal/Modal";
+import { floatToCurrency } from "../../utils/floatToCurrency";
 
 export const Medicines = () => {
+  const { allDrugs } = useMedicine();
+  const [openModal, setOpenModal] = useState(false);
+  const [modalContent, setModalContent] = useState({});
 
-  const { allDrugs } = useMedicine()
-  const navigate = useNavigate()
-  const [ openModal, setOpenModal ] = useState(false)
-  const [ modalContent, setModalContent ] = useState({})
-
-  const handleClick = () => {
-    navigate("/register-medicine")
-  }
-  useEffect(() => {}, [allDrugs])
+  useEffect(() => {}, [allDrugs]);
 
   const handleOpenModal = (drugData) => {
-    setModalContent(drugData)
-    setOpenModal(true)
-  }
+    setModalContent(drugData);
+    setOpenModal(true);
+  };
   const handleCloseModal = () => {
-    setOpenModal(false)
-  }
+    setOpenModal(false);
+  };
 
-  return(
+  return (
     <>
       <Header />
-      <Button clickEvent={handleClick}>CADASTRAR</Button>
-        <h2>Medicamentos</h2>
       <MainMedicineStyled>
-      {allDrugs.length > 0 ? allDrugs.map(
+        {allDrugs.length > 0
+          ? allDrugs.map(
               ({
                 drugName,
                 labName,
@@ -53,18 +46,21 @@ export const Medicines = () => {
                   description,
                 };
                 return (
-                  <Card
-                    clickEvent={() => handleOpenModal(drug)}
-                    key={drugName}
-                  >  <ul>
-                       <li><img src="src/assets/imgs/medicine.jpeg" alt="caixa de medicamento" /></li>
-                    <li>{drugName +" " + dosage}</li>
-                    <li>{labName.toUpperCase()}</li>
-                    <li className="price">
-                      <strong>{floatToCurrency(price)}</strong>
-                    </li>                 
-                    </ul>                  
-                      
+                  <Card clickEvent={() => handleOpenModal(drug)} key={drugName}>
+                    {" "}
+                    <ul>
+                      <li>
+                        <img
+                          src={drugImg}
+                          alt="caixa de medicamento"
+                        />
+                      </li>
+                      <li>{drugName + " " + dosage}</li>
+                      <li>{labName.toUpperCase()}</li>
+                      <li className="price">
+                        <strong>{floatToCurrency(price)}</strong>
+                      </li>
+                    </ul>
                   </Card>
                 );
               }
@@ -74,7 +70,6 @@ export const Medicines = () => {
       <Footer />
       <Modal className="modal" open={openModal} onClose={handleCloseModal}>
         <ul>
-
           <li>{modalContent.drugName}</li>
           <li>{modalContent.labName}</li>
           <li>{modalContent.dosage}</li>
@@ -89,8 +84,6 @@ export const Medicines = () => {
           ) : null}
         </ul>
       </Modal>
-    
     </>
-
-  )
-}
+  );
+};
