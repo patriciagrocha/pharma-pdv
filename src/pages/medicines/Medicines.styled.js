@@ -9,4 +9,8 @@ export const MainMedicineStyled = styled.main`
   padding: 4rem;
   gap: .5rem;
 
+  div{
+    text-align: center;
+  }
+
 `
