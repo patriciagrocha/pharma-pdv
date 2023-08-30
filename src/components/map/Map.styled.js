@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { MapContainer, Marker, Popup } from "react-leaflet";
 
 export const MapContainerStyled = styled(MapContainer)`
-  height: 25rem;
-  width: 100%;
+  height: 18rem;
+  width: 80%;
+  margin: auto;
   margin-bottom: 0.5rem;
 
   & li{
@@ -13,6 +14,9 @@ export const MapContainerStyled = styled(MapContainer)`
     text-align: center;
     list-style: none;
     gap: 5px;
+  }
+  @media( min-width:769px ){
+    width: 100%;
   }
 `;
 
