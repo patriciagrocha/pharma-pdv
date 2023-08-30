@@ -10,8 +10,7 @@ export const PharmacyProvider = ({children}) => {
     return result ? result : []
   }
   const [ allPharms, setAllPharms ] = useState(getPharms())
-  const [ isLoading, setIsLoading]  = useState(true)
-
+  
   const addPharm = (newPharm) => {
     return new Promise((resolve, reject) => {
       try {
@@ -24,7 +23,6 @@ export const PharmacyProvider = ({children}) => {
         }else{
           const updatedValues = [...pharms, newPharm]
           setData("pharms",updatedValues)
-          setIsLoading(!isLoading)
           setAllPharms(getPharms());
           resolve({ code: 201, message: "Farmácia cadastrada com sucesso"})
         }
@@ -45,7 +43,7 @@ export const PharmacyProvider = ({children}) => {
     const pharms = getPharms()
     setAllPharms(pharms)
 
-  },[isLoading])
+  },[allPharms.length])
 
   return(
     <PharmacyContext.Provider

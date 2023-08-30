@@ -10,7 +10,7 @@ export const OverlayStyled = styled.div`
   z-index: 1000;
 `
 export const ModalStyled = styled.div`
-  max-width: 90%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,9 +22,27 @@ export const ModalStyled = styled.div`
   transform: translate(-50%, -50%);
   background-color: #FFFFFF;
   border-radius: 5px;
-  padding: 50px;
+  padding: 1.5rem;
   z-index: 1000;
   color: #333333;
+
+  ul{
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+  .list-modal{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  img{
+    width: 6rem;
+  }
+  @media( min-width:769px ){
+    width: 50%;
+  }
 `
 export const ModalButtonStyled = styled.button`
     background-color: transparent;    
