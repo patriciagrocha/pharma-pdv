@@ -9,16 +9,19 @@ function Header() {
   const pages = [
    
     {
+      id:0,
       route:"/map-pharms",
       description:"Farmácias",
       click: () => null
     },
     {
+      id:2,
       route:"/medicines",
       description:"Medicamentos",
       click: () => null
     },
     {
+      id:3,
       route:"/",
       description:"Sair",
       click: () => logout()
@@ -27,15 +30,14 @@ function Header() {
 
   return(
     <HeaderStyled>     
-        <img src={logoImg} alt="logo pharma pdv" />   
-      
+        <img src={logoImg} alt="logo pharma pdv" />         
           {
            user ? (
-             pages.map(({route, description, click}) => {
+             pages.map(({route, description, click}, index) => {
                return(
                 <>
                   
-                    <LinkStyled key={route} to={route} onClick={click}>
+                    <LinkStyled key={index} to={route} onClick={click}>
                       {description}
                     </LinkStyled> 
                   
@@ -44,8 +46,6 @@ function Header() {
             })
            ) : null
           }
-       
-
     </HeaderStyled>
   )
 }

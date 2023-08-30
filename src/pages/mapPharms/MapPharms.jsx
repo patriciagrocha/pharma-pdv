@@ -22,6 +22,7 @@ export const MapPharms = () => {
   return (
     <>
       <Header />
+        <h2>Nossas lojas</h2>
       <DivStyled>
         <Button clickEvent={handleClick}>NOVA FARMÁCIA</Button>
       </DivStyled>

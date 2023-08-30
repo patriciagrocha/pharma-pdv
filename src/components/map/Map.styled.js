@@ -25,31 +25,24 @@ export const TableStyled = styled.table`
 width: 100%;
 border-collapse: collapse;
 
-& .location {
+ .location {
     display: flex;    
   }
 `
 export const TdStyled = styled.td`
-padding: 1rem;
+  padding: 1rem;
+  width: 10rem;
 
-  & button{
-    width: 10rem;
-    padding: 12px;
-    border-radius: 4px;
-    border: none;
-    background-color: #009739;
-    color: #fff;
-    font-weight: 500;
-    font-size: 1rem;
-    cursor: pointer;
-
-    &:hover{
-      opacity: 0.8;
-    }
+  @media( min-width:769px ){
+    width: 12rem;
   }
 `
-export const TrStyled = styled.tr`
-min-width: 100%;
-border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+export const TrStyled = styled.tr`//linha
+  min-width: 100%;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
 `

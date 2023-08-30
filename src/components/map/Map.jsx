@@ -7,6 +7,8 @@ import { AiFillPhone } from "react-icons/ai";
 import { RiWhatsappFill } from "react-icons/ri";
 import { MdEmail, MdLocationOn } from "react-icons/md";
 import { Button } from "../button/Button";
+import markerIcon from "../../assets/imgs/marker.png"
+import { Icon } from "leaflet";
 
 export const Map = () => {
   const { allPharms } = usePharmacy()
@@ -29,6 +31,11 @@ export const Map = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const customIcon = new Icon({
+    iconUrl: markerIcon ,
+    iconSize: [35,35]
+  })
 
   return (
     <>    
@@ -62,7 +69,7 @@ export const Map = () => {
               long,
             }) => {
               return (
-                <MarkerStyled key={email} position={[lat, long]}>
+                <MarkerStyled key={email} position={[lat, long]} icon={customIcon}>
                   <PopupStyled>
                     <ul>
                       <li>
@@ -154,14 +161,14 @@ export const Map = () => {
                 return (
                   <TrStyled key={cnpj}>
                     <TdStyled className="location">                    
-                      <MdLocationOn size={35}/>
+                      <MdLocationOn size={30}/>
                       <div>
-                        <h3>{district.toUpperCase()}</h3>
+                        <p><strong>{district.toUpperCase()}</strong></p>
                         <p>{city + " - " + uf}</p>
                       </div>                    
                     </TdStyled>                  
                     <TdStyled>
-                      <h4>{fantasyName}</h4>
+                      <p><strong>{fantasyName}</strong></p>
                       <p>{`${address}, ${addressNumber}`}</p>
                       <div>
                         <RiWhatsappFill color="green" />
