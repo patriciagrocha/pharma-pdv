@@ -9,12 +9,14 @@ import { MdEmail, MdLocationOn } from "react-icons/md";
 import { Button } from "../button/Button";
 import markerIcon from "../../assets/imgs/marker.png"
 import { Icon } from "leaflet";
+import { useNavigate } from "react-router-dom";
 
 export const Map = () => {
-  const { allPharms } = usePharmacy()
-  const [currentCenter, setCurrentCenter] = useState([-26.301478, -48.8479779])
-  const [currentZoom, setCurrentZoom] = useState(5)
+  const { allPharms } = usePharmacy();
+  const [currentCenter, setCurrentCenter] = useState([-26.301478, -48.8479779]);
+  const [currentZoom, setCurrentZoom] = useState(5);
   const [forceUpdate, setForceUpdate] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {}, [allPharms])
   useEffect(() => {console.log("effect")}, [currentCenter, currentZoom])
@@ -36,6 +38,10 @@ export const Map = () => {
     iconUrl: markerIcon ,
     iconSize: [35,35]
   })
+
+  const handleClick = () => {
+    navigate("/new-pharmacy");
+  };
 
   return (
     <>    
@@ -189,7 +195,12 @@ export const Map = () => {
           }
         </tbody>
       </TableStyled>
-      ): null
+      ): (
+        <div>
+          <p>Nenhuma farmácia cadastrada.</p>
+          <Button clickEvent={handleClick}>Cadastrar Farmácia</Button>
+        </div>
+      )
     }    
     </>
   );
