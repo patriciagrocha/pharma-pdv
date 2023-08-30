@@ -1,4 +1,4 @@
-import drugImg from "../../assets/imgs/medicine.jpeg"
+import drugImg from "../../assets/imgs/medicine.jpeg";
 import { useMedicine } from "../../contexts/Medicine/useMedicine";
 import { useEffect, useState } from "react";
 import { Header } from "../../components/header/Header";
@@ -7,12 +7,14 @@ import { MainMedicineStyled } from "./Medicines.styled";
 import { Card } from "../../components/card/Card";
 import { Modal } from "../../components/modal/Modal";
 import { floatToCurrency } from "../../utils/floatToCurrency";
-
+import { Button } from "../../components/button/Button";
+import { useNavigate } from "react-router-dom";
 
 export const Medicines = () => {
   const { allDrugs } = useMedicine();
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {}, [allDrugs]);
 
@@ -23,55 +25,55 @@ export const Medicines = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-
+  const handleClick = () => {
+    navigate("/register-medicine");
+  };
   return (
     <>
       <Header />
       <MainMedicineStyled>
-        {allDrugs.length > 0
-          ? allDrugs.map(
-              ({
+        {allDrugs.length > 0 ? (
+          allDrugs.map(
+            ({ drugName, labName, dosage, price, controlled, description }) => {
+              const drug = {
                 drugName,
                 labName,
                 dosage,
                 price,
                 controlled,
                 description,
-              }) => {
-                const drug = {
-                  drugName,
-                  labName,
-                  dosage,
-                  price,
-                  controlled,
-                  description,
-                };
-                return (
-                  <Card clickEvent={() => handleOpenModal(drug)} key={drugName}>
-                    {" "}
-                    <ul>
-                      <li>
-                        <img
-                          src={drugImg}
-                          alt="caixa de medicamento"
-                        />
-                      </li>
-                      <li>{drugName + " " + dosage}</li>
-                      <li>{labName.toUpperCase()}</li>
-                      <li className="price">
-                        <strong>{floatToCurrency(price)}</strong>
-                      </li>
-                    </ul>
-                  </Card>
-                );
-              }
-            )
-          : null}
+              };
+              return (
+                <Card clickEvent={() => handleOpenModal(drug)} key={drugName}>
+                  {" "}
+                  <ul>
+                    <li>
+                      <img src={drugImg} alt="caixa de medicamento" />
+                    </li>
+                    <li>{drugName + " " + dosage}</li>
+                    <li>{labName.toUpperCase()}</li>
+                    <li className="price">
+                      <strong>{floatToCurrency(price)}</strong>
+                    </li>
+                  </ul>
+                </Card>
+              );
+            }
+          )
+        ) : (
+          <div>
+            <p>Nenhum medicamento cadastrado.</p>
+            <Button clickEvent={handleClick}>Cadastrar Medicamento</Button>
+          </div>
+        )}
       </MainMedicineStyled>
       <Footer />
       <Modal className="modal" open={openModal} onClose={handleCloseModal}>
         <ul>
-          <li> <img src={drugImg} alt="caixa do medicamento" /> </li>
+          <li>
+            {" "}
+            <img src={drugImg} alt="caixa do medicamento" />{" "}
+          </li>
           <div className="list-modal">
             <li>
               <strong>Medicamento: </strong>
@@ -91,16 +93,16 @@ export const Medicines = () => {
             </li>
             <li>
               <strong>Tipo: </strong>
-            {modalContent.controlled
-              ? "Medicamento Controlado"
-              : "Medicamento Comum"}
-          </li>
-          {modalContent.description ? (
-            <li>
-              <strong>Descrição: </strong>              
-              {modalContent.description}
+              {modalContent.controlled
+                ? "Medicamento Controlado"
+                : "Medicamento Comum"}
             </li>
-          ) : null}
+            {modalContent.description ? (
+              <li>
+                <strong>Descrição: </strong>
+                {modalContent.description}
+              </li>
+            ) : null}
           </div>
         </ul>
       </Modal>
