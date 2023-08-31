@@ -6,12 +6,12 @@ export const MainMedicineStyled = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem;
+  padding: 2rem;
   gap: 0.5rem;
 
   input {
-    width: 15rem;
-    padding: .5rem;
+    width: 20rem;
+    padding: .6rem;
     border-radius: 18px;
     border: 1px solid  rgba(140, 133, 133,0.4);
   }
@@ -26,7 +26,7 @@ export const SectionCardStyled = styled.section`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 4rem;
+  padding: 2rem;
   gap: 0.5rem;
 
   div {
