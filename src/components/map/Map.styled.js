@@ -18,7 +18,6 @@ export const MapContainerStyled = styled(MapContainer)`
   @media (min-width: 769px) {
     width: 100%;
   }
- 
 `;
 export const DivInfoContainer = styled.div`
   width: 100%;
@@ -26,8 +25,7 @@ export const DivInfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 2rem;
-  
-`
+`;
 export const MarkerStyled = styled(Marker)``;
 
 export const PopupStyled = styled(Popup)``;
@@ -59,14 +57,15 @@ export const TdStyled = styled.td`
     margin: 0 1rem;
     cursor: pointer;
 
+    &:hover {
+      opacity: 0.8;
+    }
+
     @media (min-width: 769px) {
       width: 10rem;
       padding: 12px;
       font-size: 1rem;
     }
-  }
-  &:hover {
-    opacity: 0.8;
   }
 `;
 export const TrStyled = styled.tr`
