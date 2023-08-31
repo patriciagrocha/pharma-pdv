@@ -32,4 +32,5 @@ export const SectionCardStyled = styled.section`
   div {
     text-align: center;
   }
+
 `;

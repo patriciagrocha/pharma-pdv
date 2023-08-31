@@ -9,9 +9,10 @@ import { Modal } from "../../components/modal/Modal";
 import { floatToCurrency } from "../../utils/floatToCurrency";
 import { Button } from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
+import { FaInfoCircle, FaTrashAlt } from "react-icons/fa";
 
 export const Medicines = () => {
-  const { allDrugs } = useMedicine();
+  const { allDrugs, deleteDrug } = useMedicine();
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [foundDrugs, setFoundDrugs] = useState(allDrugs);
@@ -19,7 +20,9 @@ export const Medicines = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {}, [allDrugs]);
+  useEffect(() => {
+    setFoundDrugs(allDrugs);
+  }, [allDrugs.length]);
 
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();
@@ -56,6 +59,7 @@ export const Medicines = () => {
           {foundDrugs.length > 0 ? (
             foundDrugs.map(
               ({
+                id,
                 drugName,
                 labName,
                 dosage,
@@ -64,6 +68,7 @@ export const Medicines = () => {
                 description,
               }) => {
                 const drug = {
+                  id,
                   drugName,
                   labName,
                   dosage,
@@ -72,19 +77,34 @@ export const Medicines = () => {
                   description,
                 };
                 return (
-                  <Card clickEvent={() => handleOpenModal(drug)} key={drugName}>
-                    {" "}
-                    <ul>
-                      <li>
-                        <img src={drugImg} alt="caixa de medicamento" />
-                      </li>
-                      <li>{drugName + " " + dosage + "mg"}</li>
-                      <li>{labName.toUpperCase()}</li>
-                      <li className="price">
-                        <strong>{floatToCurrency(price)}</strong>
-                      </li>
-                    </ul>
-                  </Card>
+                  <>
+                    <Card key={id}>
+                      {" "}
+                      <ul>
+                        <li>
+                          <button
+                            key={drugName}
+                            onClick={() => handleOpenModal(drug)}
+                          >
+                            <FaInfoCircle size={30} color=" #93acd6" />
+                          </button>
+                        </li>
+                        <li>
+                          <img src={drugImg} alt="caixa de medicamento" />
+                        </li>
+                        <li>{drugName + " " + dosage + "mg"}</li>
+                        <li>{labName.toUpperCase()}</li>
+                        <li className="price">
+                          <strong>{floatToCurrency(price)}</strong>
+                        </li>
+                        <li>
+                          <button key={drugName} onClick={() => deleteDrug(id)}>
+                            <FaTrashAlt size={25} color="#f01713" />
+                          </button>
+                        </li>
+                      </ul>
+                    </Card>
+                  </>
                 );
               }
             )

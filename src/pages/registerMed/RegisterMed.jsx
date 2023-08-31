@@ -15,6 +15,7 @@ import {
 import { registerMedSchema } from "../../validations/registerMedSchema";
 import { stringToFloat } from "../../utils/stringToFloat";
 import { useMedicine } from "../../contexts/Medicine/useMedicine";
+import { v4 as uuidv4 } from 'uuid';
 
 export const RegisterMed = () => {
   const {
@@ -28,7 +29,7 @@ export const RegisterMed = () => {
   const { addDrug } = useMedicine()
 
   const onSubmit = async (data) => {
-
+    data.id = uuidv4();
     data.dosage = stringToFloat(data.dosage)
     data.price = stringToFloat(data.price)
 
