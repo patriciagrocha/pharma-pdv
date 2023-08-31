@@ -39,9 +39,16 @@ export const MedicineProvider = ({ children }) => {
   };
 
   const deleteDrug = (drugId) => {
-    const newDrugs = allDrugs.filter((item) => item.id !== drugId);
-    setData("drugs", newDrugs);
-    setAllDrugs(newDrugs);
+    return new Promise((resolve, reject) => {
+      try {
+        const newDrugs = allDrugs.filter((item) => item.id !== drugId);
+        setData("drugs", newDrugs);
+        setAllDrugs(newDrugs);
+        resolve({ code: 200, message: "Medicamento excluído com sucesso!" });
+      } catch (error) {
+        reject({ code: 400, message: error });
+      }
+    });
   };
 
   const drugExist = (drugs, newDrug) => {
@@ -56,7 +63,7 @@ export const MedicineProvider = ({ children }) => {
     );
     return foundDrug ? true : false;
   };
-  
+
   useEffect(() => {
     const drugs = getDrugs();
     setAllDrugs(drugs);
