@@ -16,6 +16,7 @@ import {
   MainLoginStyled,
 } from "./NewPharmacy.styled";
 import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy"
+import { v4 as uuidv4 } from 'uuid';
 
 
 function NewPharmacy() {
@@ -58,7 +59,8 @@ function NewPharmacy() {
   },[address])
 
   
-  const onSubmit = async (data) => {     
+  const onSubmit = async (data) => {    
+    data.id = uuidv4(); 
     try{
       const result = await addPharm(data)
       if(result.code == 201){

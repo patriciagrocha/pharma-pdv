@@ -82,10 +82,7 @@ export const Medicines = () => {
                       {" "}
                       <ul>
                         <li>
-                          <button
-                            key={drugName}
-                            onClick={() => handleOpenModal(drug)}
-                          >
+                          <button onClick={() => handleOpenModal(drug)}>
                             <FaInfoCircle size={30} color=" #93acd6" />
                           </button>
                         </li>
@@ -98,7 +95,7 @@ export const Medicines = () => {
                           <strong>{floatToCurrency(price)}</strong>
                         </li>
                         <li>
-                          <button key={drugName} onClick={() => deleteDrug(id)}>
+                          <button onClick={() => deleteDrug(id)}>
                             <FaTrashAlt size={25} color="#f01713" />
                           </button>
                         </li>

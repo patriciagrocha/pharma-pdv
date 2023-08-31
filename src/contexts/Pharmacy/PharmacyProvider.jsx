@@ -10,6 +10,12 @@ export const PharmacyProvider = ({children}) => {
     return result ? result : []
   }
   const [ allPharms, setAllPharms ] = useState(getPharms())
+
+  const deletePharm = (pharmId) => {
+    const newPharms = allPharms.filter((item) => item.id !== pharmId);
+    setData("pharms", newPharms);
+    setAllPharms(newPharms);
+  };
   
   const addPharm = (newPharm) => {
     return new Promise((resolve, reject) => {
@@ -50,6 +56,7 @@ export const PharmacyProvider = ({children}) => {
       value={{
         allPharms,
         addPharm,
+        deletePharm,
       }}>
       {children}
     </PharmacyContext.Provider>
