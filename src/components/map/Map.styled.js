@@ -7,7 +7,7 @@ export const MapContainerStyled = styled(MapContainer)`
   margin: auto;
   margin-bottom: 0.5rem;
 
-  & li{
+  & li {
     display: flex;
     justify-items: center;
     align-items: center;
@@ -15,38 +15,66 @@ export const MapContainerStyled = styled(MapContainer)`
     list-style: none;
     gap: 5px;
   }
-  @media( min-width:769px ){
+  @media (min-width: 769px) {
     width: 100%;
   }
+ 
 `;
-
+export const DivInfoContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  
+`
 export const MarkerStyled = styled(Marker)``;
 
 export const PopupStyled = styled(Popup)``;
 
-
 export const TableStyled = styled.table`
-width: 100%;
-border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 
- .location {
-    display: flex;    
+  .location {
+    display: flex;
   }
-`
+`;
 export const TdStyled = styled.td`
   padding: 1rem;
-  width: 10rem;
 
-  @media( min-width:769px ){
-    width: 12rem;
+  @media (min-width: 769px) {
+    width: 14rem;
   }
-`
-export const TrStyled = styled.tr`//linha
+
+  .btn-delete {
+    width: 6rem;
+    padding: 12px 6px;
+    border-radius: 4px;
+    border: none;
+    background-color: #f01713;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin: 0 1rem;
+    cursor: pointer;
+
+    @media (min-width: 769px) {
+      width: 10rem;
+      padding: 12px;
+      font-size: 1rem;
+    }
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+export const TrStyled = styled.tr`
+  //linha
   min-width: 100%;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
-`
+`;

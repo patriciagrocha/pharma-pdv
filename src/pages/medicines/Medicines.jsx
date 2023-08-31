@@ -3,20 +3,35 @@ import { useMedicine } from "../../contexts/Medicine/useMedicine";
 import { useEffect, useState } from "react";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
-import { MainMedicineStyled } from "./Medicines.styled";
+import { MainMedicineStyled, SectionCardStyled } from "./Medicines.styled";
 import { Card } from "../../components/card/Card";
 import { Modal } from "../../components/modal/Modal";
 import { floatToCurrency } from "../../utils/floatToCurrency";
 import { Button } from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
+import { FaInfoCircle, FaTrashAlt } from "react-icons/fa";
 
 export const Medicines = () => {
-  const { allDrugs } = useMedicine();
+  const { allDrugs, deleteDrug } = useMedicine();
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  const [foundDrugs, setFoundDrugs] = useState(allDrugs);
+  const [searchValue, setSearchValue] = useState("");
+
   const navigate = useNavigate();
 
-  useEffect(() => {}, [allDrugs]);
+  useEffect(() => {
+    setFoundDrugs(allDrugs);
+  }, [allDrugs.length]);
+
+  const handleSearch = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredDrugs = allDrugs.filter((drug) =>
+      drug.drugName.toLowerCase().includes(searchTerm)
+    );
+    setFoundDrugs(filteredDrugs);
+    setSearchValue(searchTerm);
+  };
 
   const handleOpenModal = (drugData) => {
     setModalContent(drugData);
@@ -32,40 +47,73 @@ export const Medicines = () => {
     <>
       <Header />
       <MainMedicineStyled>
-        {allDrugs.length > 0 ? (
-          allDrugs.map(
-            ({ drugName, labName, dosage, price, controlled, description }) => {
-              const drug = {
+        <form>
+          <input
+            type="text"
+            placeholder="Digite o nome do medicamento"
+            value={searchValue}
+            onChange={handleSearch}
+          />
+        </form>
+        <SectionCardStyled>
+          {foundDrugs.length > 0 ? (
+            foundDrugs.map(
+              ({
+                id,
                 drugName,
                 labName,
                 dosage,
                 price,
                 controlled,
                 description,
-              };
-              return (
-                <Card clickEvent={() => handleOpenModal(drug)} key={drugName}>
-                  {" "}
-                  <ul>
-                    <li>
-                      <img src={drugImg} alt="caixa de medicamento" />
-                    </li>
-                    <li>{drugName + " " + dosage}</li>
-                    <li>{labName.toUpperCase()}</li>
-                    <li className="price">
-                      <strong>{floatToCurrency(price)}</strong>
-                    </li>
-                  </ul>
-                </Card>
-              );
-            }
-          )
-        ) : (
-          <div>
-            <p>Nenhum medicamento cadastrado.</p>
-            <Button clickEvent={handleClick}>Cadastrar Medicamento</Button>
-          </div>
-        )}
+              }) => {
+                const drug = {
+                  id,
+                  drugName,
+                  labName,
+                  dosage,
+                  price,
+                  controlled,
+                  description,
+                };
+                return (
+                  <>
+                    <Card key={id}>
+                      {" "}
+                      <ul>
+                        <li>
+                          <button onClick={() => handleOpenModal(drug)}>
+                            <FaInfoCircle size={30} color=" #93acd6" />
+                          </button>
+                        </li>
+                        <li>
+                          <img src={drugImg} alt="caixa de medicamento" />
+                        </li>
+                        <li>{drugName + " " + dosage + "mg"}</li>
+                        <li>{labName.toUpperCase()}</li>
+                        <li className="price">
+                          <strong>{floatToCurrency(price)}</strong>
+                        </li>
+                        <li>
+                          <button onClick={() => deleteDrug(id)}>
+                            <FaTrashAlt size={25} color="#f01713" />
+                          </button>
+                        </li>
+                      </ul>
+                    </Card>
+                  </>
+                );
+              }
+            )
+          ) : searchValue === "" ? (
+            <div>
+              <p>Nenhum medicamento cadastrado.</p>
+              <Button clickEvent={handleClick}>Cadastrar Medicamento</Button>
+            </div>
+          ) : (
+            <p>Nenhum medicamento encontrado.</p>
+          )}
+        </SectionCardStyled>
       </MainMedicineStyled>
       <Footer />
       <Modal className="modal" open={openModal} onClose={handleCloseModal}>
@@ -85,14 +133,16 @@ export const Medicines = () => {
             </li>
             <li>
               <strong>Dosagem: </strong>
-              {modalContent.dosage}
+              {modalContent.dosage + "mg"}
             </li>
             <li>
               <strong>Preço: </strong>
-              {modalContent.price}
+              {typeof modalContent.price == "number"
+                ? floatToCurrency(modalContent.price)
+                : modalContent.price}
             </li>
             <li>
-              <strong>Tipo: </strong>
+              <strong>Categoria: </strong>
               {modalContent.controlled
                 ? "Medicamento Controlado"
                 : "Medicamento Comum"}

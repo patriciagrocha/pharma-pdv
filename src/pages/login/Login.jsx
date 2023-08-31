@@ -17,7 +17,7 @@ const schema = yup.object().shape({
 
   password: yup.string()
   .required("Campo obrigatório!")
-  .matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/, "A senha deve ter pelo menos 8 caracteres com letras e números")
+  .matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/, "A senha deve ter pelo menos 8 caracteres com letras e números").max(12, "A senha deve ter no máximo 12 caracteres")
 })
 
 function Login(){
@@ -35,7 +35,7 @@ function Login(){
     try {
       const result = await login(data)
       if(result.code == 201){
-        navigate("/new-pharmacy")
+        navigate("/medicines")
       }else{
         toast.error("Falha ao efetuar login.Tente novamente!", {})
       }
