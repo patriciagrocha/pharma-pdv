@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy";
 import { TileLayer } from "react-leaflet";
-import { MapContainerStyled, MarkerStyled, PopupStyled, TableStyled, TdStyled, TrStyled } from "./Map.styled";
+import { DivInfoContainer, MapContainerStyled, MarkerStyled, PopupStyled, TableStyled, TdStyled, TrStyled } from "./Map.styled";
 import "leaflet/dist/leaflet.css";
 import { AiFillPhone } from "react-icons/ai";
 import { RiWhatsappFill } from "react-icons/ri";
@@ -12,14 +12,14 @@ import { Icon } from "leaflet";
 import { useNavigate } from "react-router-dom";
 
 export const Map = () => {
-  const { allPharms } = usePharmacy();
+  const { allPharms, deletePharm } = usePharmacy();
   const [currentCenter, setCurrentCenter] = useState([-26.301478, -48.8479779]);
   const [currentZoom, setCurrentZoom] = useState(5);
   const [forceUpdate, setForceUpdate] = useState(0);
   const navigate = useNavigate();
 
-  useEffect(() => {}, [allPharms])
-  useEffect(() => {console.log("effect")}, [currentCenter, currentZoom])
+  useEffect(() => {}, [allPharms.length])
+  useEffect(() => {}, [currentCenter, currentZoom])
 
   const handleChangeCoordinates = (coordinates) => {
     console.log(coordinates);
@@ -151,7 +151,7 @@ export const Map = () => {
           {
             allPharms.map(
               (
-                {                  
+                {  id,                
                   cnpj,
                   fantasyName,                  
                   cellPhone,
@@ -188,6 +188,9 @@ export const Map = () => {
                     </TdStyled>
                     <TdStyled>
                       <Button clickEvent={() => handleChangeCoordinates([lat, long])}>VER NO MAPA</Button>
+                      <button className="btn-delete" onClick={() => deletePharm(id)}>
+                            EXCLUIR
+                      </button>
                     </TdStyled>
                   </TrStyled>
                 )
@@ -196,10 +199,10 @@ export const Map = () => {
         </tbody>
       </TableStyled>
       ): (
-        <div>
+        <DivInfoContainer >
           <p>Nenhuma farmácia cadastrada.</p>
           <Button clickEvent={handleClick}>Cadastrar Farmácia</Button>
-        </div>
+        </DivInfoContainer>
       )
     }    
     </>

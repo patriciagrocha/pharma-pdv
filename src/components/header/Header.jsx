@@ -7,16 +7,6 @@ function Header() {
 
   const pages = [
     {
-      route: "/map-pharms",
-      description: "Nossas Lojas",
-      click: () => null,
-    },
-    {
-      route: "/new-pharmacy",
-      description: "Cadastrar Farmácia",
-      click: () => null,
-    },
-    {
       route: "/medicines",
       description: "Medicamentos",
       click: () => null,
@@ -26,6 +16,16 @@ function Header() {
       description: "Cadastrar Medicamento",
       click: () => null,
     },
+    {
+      route: "/map-pharms",
+      description: "Nossas Lojas",
+      click: () => null,
+    },
+    {
+      route: "/new-pharmacy",
+      description: "Cadastrar Farmácia",
+      click: () => null,
+    },   
     {
       route: "/",
       description: "Sair",
