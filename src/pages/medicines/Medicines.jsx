@@ -10,6 +10,8 @@ import { floatToCurrency } from "../../utils/floatToCurrency";
 import { Button } from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 import { FaInfoCircle, FaTrashAlt } from "react-icons/fa";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Medicines = () => {
   const { allDrugs, deleteDrug } = useMedicine();
@@ -19,6 +21,17 @@ export const Medicines = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const navigate = useNavigate();
+
+  const removeDrug = async (drugId) => {
+    try {
+      const result = await deleteDrug(drugId);
+      if (result.code == 200) {
+        toast.success(result.message, {});
+      }
+    } catch (error) {
+      toast.error("Ocorreu um erro inesperado. Consulte o suporte.", {});
+    }
+  };
 
   useEffect(() => {
     setFoundDrugs(allDrugs);
@@ -95,7 +108,7 @@ export const Medicines = () => {
                           <strong>{floatToCurrency(price)}</strong>
                         </li>
                         <li>
-                          <button onClick={() => deleteDrug(id)}>
+                          <button onClick={() => removeDrug(id)}>
                             <FaTrashAlt size={25} color="#f01713" />
                           </button>
                         </li>
@@ -155,7 +168,7 @@ export const Medicines = () => {
             ) : null}
           </div>
         </ul>
-      </Modal>
+      </Modal>      
     </>
   );
 };

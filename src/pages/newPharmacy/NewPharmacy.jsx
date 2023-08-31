@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { newPharmacySchema } from "../../validations/newPharmacySchema";
-import { api } from "../../services/api"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { api } from "../../services/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   ContainerBtnStyled,
   DivInputStyled,
@@ -15,9 +15,8 @@ import {
   InputSaveStyled,
   MainLoginStyled,
 } from "./NewPharmacy.styled";
-import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy"
-import { v4 as uuidv4 } from 'uuid';
-
+import { usePharmacy } from "../../contexts/Pharmacy/usePharmacy";
+import { v4 as uuidv4 } from "uuid";
 
 function NewPharmacy() {
   const {
@@ -27,80 +26,75 @@ function NewPharmacy() {
     setValue,
     setFocus,
   } = useForm({ resolver: yupResolver(newPharmacySchema) });
-  
 
-  const [ address, setAddress ] = useState()
+  const [address, setAddress] = useState();
 
-  const { addPharm } = usePharmacy()
-  
+  const { addPharm } = usePharmacy();
+
   const handleCep = async (e) => {
-    const cep = e.target.value.replace(/\D/g,"");
-   
-    try{
+    const cep = e.target.value.replace(/\D/g, "");
+
+    try {
       const response = await api.get(`/${cep}`);
       //console.log(response.data);
-      setAddress (response.data)      
-    }catch (error){
-      console.log(error,'Erro ao buscar o endereço. Verifique o CEP e tente novamente.');
+      setAddress(response.data);
+    } catch (error) {
+      console.log(
+        error,
+        "Erro ao buscar o endereço. Verifique o CEP e tente novamente."
+      );
       setAddress();
-    }   
-  }
-  useEffect(() => {
-    if(address){
-      setValue("address", address.street)
-      setValue("district", address.neighborhood)
-      setValue("city", address.city)
-      setValue("uf", address.state)
-      setValue("lat",address.location.coordinates.latitude)
-      setValue("long",address.location.coordinates.longitude)
-      setFocus("addressNumber")
     }
-    
-  },[address])
+  };
+  useEffect(() => {
+    if (address) {
+      setValue("address", address.street);
+      setValue("district", address.neighborhood);
+      setValue("city", address.city);
+      setValue("uf", address.state);
+      setValue("lat", address.location.coordinates.latitude);
+      setValue("long", address.location.coordinates.longitude);
+      setFocus("addressNumber");
+    }
+  }, [address]);
 
-  
-  const onSubmit = async (data) => {    
-    data.id = uuidv4(); 
-    try{
-      const result = await addPharm(data)
-      if(result.code == 201){
+  const onSubmit = async (data) => {
+    data.id = uuidv4();
+    try {
+      const result = await addPharm(data);
+      if (result.code == 201) {
         toast.success(result.message, {});
         resetForm();
-      }else if(result.code == 409){
-        toast.error(result.message, {})
-      } 
-    }catch (error){
-      toast.error("Ocorreu um erro inesperado. Consulte o suporte!", {})
-     
+      } else if (result.code == 409) {
+        toast.error(result.message, {});
+      }
+    } catch (error) {
+      toast.error("Ocorreu um erro inesperado. Consulte o suporte!", {});
     }
-      
   };
   const resetForm = () => {
-    setValue("corporateName", "")
-    setValue("cnpj", "")
-    setValue("fantasyName", "")
-    setValue("email", "")
-    setValue("phoneNumber", "")
-    setValue("cellPhone", "")
-    setValue("cep", "")
-    setValue("address", "")
-    setValue("addressNumber", "")
-    setValue("district", "")
-    setValue("uf", "")
-    setValue("complement", "")
-    setValue("lat","")
-    setValue("long","")
-    setFocus("corporateName")
-
-  }
-  
+    setValue("corporateName", "");
+    setValue("cnpj", "");
+    setValue("fantasyName", "");
+    setValue("email", "");
+    setValue("phoneNumber", "");
+    setValue("cellPhone", "");
+    setValue("cep", "");
+    setValue("address", "");
+    setValue("addressNumber", "");
+    setValue("district", "");
+    setValue("uf", "");
+    setValue("complement", "");
+    setValue("lat", "");
+    setValue("long", "");
+    setFocus("corporateName");
+  };
 
   return (
     <>
       <Header />
       <MainLoginStyled>
         <h2>Cadastro de farmácia</h2>
-
         <FormLoginStyled onSubmit={handleSubmit(onSubmit)}>
           <DivInputStyled>
             <label>Razão social</label>
@@ -152,7 +146,6 @@ function NewPharmacy() {
           <DivInputStyled>
             <label>CEP</label>
             <input
-              
               placeholder="_____-___"
               className="input-form"
               {...register("cep")}
@@ -171,7 +164,6 @@ function NewPharmacy() {
               type="number"
               className="input-form"
               {...register("addressNumber")}
-
             />
             <span>{errors.addressNumber?.message}</span>
           </DivInputStyled>
@@ -197,12 +189,12 @@ function NewPharmacy() {
           </DivInputStyled>
           <DivInputStyled>
             <label>Latitude</label>
-            <input  className="input-form" {...register("lat")} />
+            <input className="input-form" {...register("lat")} />
             <span>{errors.lat?.message}</span>
           </DivInputStyled>
           <DivInputStyled>
             <label>Longitude</label>
-            <input  className="input-form" {...register("long")} />
+            <input className="input-form" {...register("long")} />
             <span>{errors.long?.message}</span>
           </DivInputStyled>
           <ContainerBtnStyled>
@@ -212,19 +204,6 @@ function NewPharmacy() {
         </FormLoginStyled>
       </MainLoginStyled>
       <Footer />
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        />
-        
     </>
   );
 }

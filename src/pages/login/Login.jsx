@@ -1,56 +1,56 @@
-import { useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import { FormLoginStyled, InputLoginStyled, MainLoginStyled } from "./Login.styled"
-import { Header } from "../../components/header/Header"
-import { Footer } from "../../components/footer/Footer"
-import { useNavigate } from "react-router-dom"
-import { useAuthentication } from "../../contexts/Authentication/useAuthentication"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import {
+  FormLoginStyled,
+  InputLoginStyled,
+  MainLoginStyled,
+} from "./Login.styled";
+import { Header } from "../../components/header/Header";
+import { Footer } from "../../components/footer/Footer";
+import { useNavigate } from "react-router-dom";
+import { useAuthentication } from "../../contexts/Authentication/useAuthentication";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = yup.object().shape({
-  email: yup.string()
-  .required("Campo obrigatório!")
-  .email("Insira um e-mail válido"),
+  email: yup
+    .string()
+    .required("Campo obrigatório!")
+    .email("Insira um e-mail válido"),
 
-  password: yup.string()
-  .required("Campo obrigatório!")
-  .matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/, "A senha deve ter pelo menos 8 caracteres com letras e números").max(12, "A senha deve ter no máximo 12 caracteres")
-})
+  password: yup
+    .string()
+    .required("Campo obrigatório!")
+    .matches(
+      /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/,
+      "A senha deve ter entre 8 - 12 caracteres com letras e números"
+    )
+    .max(12, "A senha deve ter no máximo 12 caracteres"),
+});
 
-function Login(){
-  const { 
-    register, 
-    handleSubmit, 
-    formState: { errors} } = useForm({resolver: yupResolver(schema)})
+function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
-
-  const{ login } = useAuthentication()
-  const navigate = useNavigate()
+  const { login } = useAuthentication();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-
     try {
-      const result = await login(data)
-      if(result.code == 201){
-        navigate("/medicines")
-      }else{
-        toast.error("Falha ao efetuar login.Tente novamente!", {})
+      const result = await login(data);
+      if (result.code == 201) {
+        navigate("/medicines");
+      } else {
+        toast.error("Falha ao efetuar login.Tente novamente!", {});
       }
-      
     } catch (error) {
-      toast.error("Ocorreu um erro inesperado. Consulte o suporte!", {})
+      toast.error("Ocorreu um erro inesperado. Consulte o suporte!", {});
     }
-
-
-
-    console.log(data);
-    navigate("/new-pharmacy")    
-  }
- 
-
+  };
 
   return (
     <>
@@ -60,10 +60,11 @@ function Login(){
           <p>Faça seu login</p>
           <div>
             <label>E-mail</label>
-            <input 
+            <input
               className="input-form"
-              placeholder="Seu e-mail" 
-              {...register("email")} />
+              placeholder="Seu e-mail"
+              {...register("email")}
+            />
             <span>{errors.email?.message}</span>
           </div>
           <div>
@@ -80,19 +81,7 @@ function Login(){
         </FormLoginStyled>
       </MainLoginStyled>
       <Footer />
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        />
     </>
   );
 }
-export { Login }
+export { Login };
